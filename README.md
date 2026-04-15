@@ -9,13 +9,13 @@ This repository provides MATLAB code to calculate annual Dynamic Habitat Indices
 - Variation DHI (ecosystem stability)
 
 ## Data
-- MODIS Collection 6.1
-- VIIRS V2
+- MODIS Collection 6.1 vegetation products
+- VIIRS V2 NPP vegetation products
 
 ## How to run
 1. Download sample data
 2. Run:
-   run_demo.m
+   Global_Terra_NDVI_Annual_DHIs_500m.m
 
 ## Author
 Duanyang Liu
