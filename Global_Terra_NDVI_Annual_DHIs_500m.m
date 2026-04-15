@@ -10,8 +10,8 @@ tile_names = importdata('global_tiles.xlsx');
 tile_names = cell2mat(tile_names);
 [tile_m, tile_n] = size(tile_znames)
 %% load the MODIS Terra NDVI data over global scale
-main_path = 'Z:\Duanyang\VIIRS V2\VNP13A1A2\MOD13A1_';
-land_cover_main = 'Z:\Duanyang\VIIRS V2\VNP13A1A2\MCD12Q1\';
+main_path = '.\MOD13A1_';
+land_cover_main = '.\MCD12Q1\';
 for tile_num = 1:1:292
     tile_name = (tile_names(tile_num,:))
     count_full_years = 0;
@@ -586,13 +586,13 @@ update_VI_data = reshape(update_VI_data,2400,2400,529);
         scale_min_data_year(scale_min_data_year >100 ) = NaN;
         scale_var_data_year(scale_var_data_year >100 ) = NaN;
         %save the DHIs reuslts
-        tiff_main_path = 'Z:\Duanyang\VIIRS V2\VNP13A1A2\2015\tiff_2015\';
+        tiff_main_path = '.\tiff_2015\';
         tiff_key = strcat(tiff_main_path,'*2015193.',tile_name,'*.tif');
         tiff_info = dir(tiff_key);
         tiff_file_path = strcat(tiff_main_path,tiff_info.name);
         [ndvi_data, R] = geotiffread(tiff_file_path);
         info = geotiffinfo(tiff_file_path);
-        out_main = ['Z:\Duanyang\annual_DHIs\Terra_NDVI\output\tiles\'];
+        out_main = ['.\Terra_NDVI\output\tiles\'];
         year_str = num2str(year_num + 2000);
         cum_name = strcat(out_main,'new_',year_str,'_','Cum_',tile_name,'_MODIS_C61_Terra_NDVI.tif');
         min_name = strcat(out_main,'new_',year_str,'_','Min_',tile_name,'_MODIS_C61_Terra_NDVI.tif');
