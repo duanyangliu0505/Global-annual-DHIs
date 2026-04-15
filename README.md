@@ -13,9 +13,9 @@ This repository provides MATLAB code to calculate annual Dynamic Habitat Indices
 - VIIRS V2 NPP vegetation products
 
 ## How to run
-1. Download sample data
+1. Download the vegetation product of MODIS and VIIRS from the EarthData: https://search.earthdata.nasa.gov/search?lat=-0.140625&long=0.0703125
 2. Run:
-   Global_Terra_NDVI_Annual_DHIs_500m.m
+   Global_Terra_NDVI_Annual_DHIs_500m.m (an example of MODIS Terra NDVI annual DHIs calculation)
 
 ## Author
 Duanyang Liu
