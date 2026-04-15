@@ -1,5 +1,5 @@
 %This code is designed to calculate the annual DHIs over global scale 
-%The input data are over twenty four year MODIS Terra EVI data (2000.2-2023)
+%The input data are over twenty four year MODIS Terra NDVI data (2000.6-2023.6)
 %All the twenty four years data will be used to conduct the data process,
 %including linear interpolation, median selection, and sg filter.
 %After data process, annual DHIs will be calculate in each year
@@ -9,7 +9,7 @@ clear
 tile_names = importdata('global_tiles.xlsx');
 tile_names = cell2mat(tile_names);
 [tile_m, tile_n] = size(tile_znames)
-%% load the MODIS Terra EVI data over global scale
+%% load the MODIS Terra NDVI data over global scale
 main_path = 'Z:\Duanyang\VIIRS V2\VNP13A1A2\MOD13A1_';
 land_cover_main = 'Z:\Duanyang\VIIRS V2\VNP13A1A2\MCD12Q1\';
 for tile_num = 1:1:292
@@ -25,7 +25,7 @@ for tile_num = 1:1:292
         land_cover_path = strcat(land_cover_main,land_cover_info.name);
         land_cover_data = hdfread(land_cover_path,'LC_Type1');
     end
-    %% Because of the limitation of memory and CPU, i will calculate each tile (2400*2400) by 200 crows
+    %% Because of the limitation of memory and CPU, user can calculate each tile (2400*2400) by partitioning 
     crow_num = 1;
     update_VI_data_col = [];
     scale_cum_data = [];
@@ -45,7 +45,7 @@ for tile_num = 1:1:292
                 file_dir = dir(path_key);
                 if ~isempty(file_dir)
                     file_path = strcat(main_path,'2000\',file_dir.name)
-                    %read the MODIS Terra EVI and QA data
+                    %read the MODIS Terra NDVI and QA data
                     vi_data = hdfread(file_path,'500m 16 days NDVI');
                     vi_data = vi_data(cum_str:cum_end,:); 
                     qa_data = hdfread(file_path,'500m 16 days VI Quality');
@@ -74,7 +74,7 @@ for tile_num = 1:1:292
                     full_year_vi(:,:,count_full_years) = pro_vi_data;
                 end
             end
-            % load the complete year data (2001-2023)
+            % load the complete year data (2001-2022)
             for year = 2001:2022
                 year_str = string(year);
                  for doy_num = 1:16:353
@@ -85,7 +85,7 @@ for tile_num = 1:1:292
                       file_dir = dir(path_key);
                       if ~isempty(file_dir)
                           file_path = strcat(main_path,year_str,'\',file_dir.name)
-                          %load the MODIS Terra EVI and QA data
+                          %load the MODIS Terra NDVI and QA data
                           vi_data = hdfread(file_path,'500m 16 days NDVI');
                           vi_data = vi_data(cum_str:cum_end,:);
                           qa_data = hdfread(file_path,'500m 16 days VI Quality');
@@ -119,7 +119,7 @@ for tile_num = 1:1:292
                 file_dir = dir(path_key);
                 if ~isempty(file_dir)
                     file_path = strcat(main_path,'2023\',file_dir.name)
-                    %read the MODIS Terra EVI and QA data
+                    %read the MODIS Terra NDVI and QA data
                     vi_data = hdfread(file_path,'500m 16 days NDVI');
                     vi_data = vi_data(cum_str:cum_end,:); 
                     qa_data = hdfread(file_path,'500m 16 days VI Quality');
@@ -590,7 +590,7 @@ update_VI_data = reshape(update_VI_data,2400,2400,529);
         tiff_key = strcat(tiff_main_path,'*2015193.',tile_name,'*.tif');
         tiff_info = dir(tiff_key);
         tiff_file_path = strcat(tiff_main_path,tiff_info.name);
-        [evi_data, R] = geotiffread(tiff_file_path);
+        [ndvi_data, R] = geotiffread(tiff_file_path);
         info = geotiffinfo(tiff_file_path);
         out_main = ['Z:\Duanyang\annual_DHIs\Terra_NDVI\output\tiles\'];
         year_str = num2str(year_num + 2000);
